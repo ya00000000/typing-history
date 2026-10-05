@@ -1,15 +1,184 @@
 <!doctype html>
-<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>英打遊戲開發歷程</title><style>
-[hidden]{display:none!important}:root{font-family:system-ui,"Microsoft JhengHei",sans-serif;color:#243e38;background:#f5f3ec;line-height:1.7}*{box-sizing:border-box}body{margin:0}main{max-width:1040px;margin:auto;padding:36px 24px}h1{font-size:clamp(28px,4.5vw,44px);line-height:1.3;margin:12px 0 18px}h2{font-size:22px}p{margin:12px 0}a{color:#205d50}button,input{font:inherit}button,.action{display:inline-block;padding:12px 22px;border:1px solid #426d5e;background:#426d5e;color:#fff;border-radius:12px;text-decoration:none;cursor:pointer}button.secondary{background:#fff;color:#284c40}button:disabled{opacity:.5;cursor:default}button:hover:not(:disabled),.action:hover{filter:brightness(.95)}:focus-visible{outline:3px solid #b16b35;outline-offset:4px}.eyebrow{font-size:13px;letter-spacing:.14em;color:#596f62}.panel{background:white;border:1px solid #ccd7ce;border-radius:20px;padding:24px;margin:20px 0}.muted,small{color:#526459}.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}#message{min-height:2em}input[type=url]{width:100%;padding:12px;border:1px solid #8a9f90;border-radius:9px;margin:6px 0 14px}label{display:block}details{background:#eef0e8;border-radius:14px;padding:16px;margin-top:24px}summary{cursor:pointer;font-weight:650}.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.card{display:flex;flex-direction:column;background:white;border:1px solid #ccd7ce;border-radius:18px;padding:24px;min-height:260px}.card p{flex:1}.badge{font-size:12px;color:#526459}.card a{margin-top:14px}a[aria-disabled=true]{color:#6b716c;background:#eeeee8;border-color:#bbb;cursor:not-allowed}.keyboard-wrap{overflow:auto;padding:10px 0}.keyboard{min-width:620px;max-width:870px;margin:auto;background:#d5ddd5;padding:14px;border-radius:18px}.keyrow{display:flex;justify-content:center;gap:6px;margin:6px 0}.key{display:grid;place-items:center;width:52px;height:48px;border-radius:8px;border:1px solid #98ad9e;border-bottom-width:4px;background:#f9faf4;color:#53645a;font-size:20px;font-weight:700}.key.practice{background:#e4bbab;color:#452e25}.key.lit{background:#a1332e;color:white;border-color:#682a28;box-shadow:0 0 0 3px #f1d6bc;transform:translateY(-2px)}.key.lit:after{content:'●';font-size:7px;line-height:1}.score{display:flex;gap:14px;flex-wrap:wrap}.score span{background:#edf1e9;padding:8px 14px;border-radius:10px}.score b{font-size:26px}.target{font-size:80px;font-weight:800;line-height:1.2;margin:14px}.game{text-align:center;outline-offset:5px}.controls{display:flex;gap:12px;flex-wrap:wrap;align-items:center}.controls label{flex:1;min-width:200px}input[type=range]{width:100%;accent-color:#426d5e}.sky{height:300px;position:relative;overflow:hidden;border-radius:18px;background:linear-gradient(#e2edf0,#f5f0df);border-bottom:8px solid #a5b794}.sky:before{content:'落地前，按下對應的英文字母';position:absolute;top:12px;left:16px;color:#506664;font-size:13px}.falling{position:absolute;left:50%;transform:translateX(-50%);width:60px;height:60px;display:grid;place-items:center;border-radius:16px;background:#ab4939;color:white;font-size:36px;font-weight:bold;box-shadow:0 6px 0 #d2aa92}.help{font-size:14px}body.completed .sky{background:#e4ebdf}@media(max-width:700px){main{padding:22px 14px}.cards{grid-template-columns:1fr}.card{min-height:190px}.panel{padding:16px}}
-</style></head><body><main><p class="eyebrow">MY TYPING JOURNEY</p><h1>英打遊戲開發歷程</h1><p>從第一個頁面開始，記錄每一次完成的小進步。</p><div class="cards"><article class="card"><span class="badge">VERSION 01</span><h2>版本1</h2><p>一個標題、一個按鈕。我的第一次網站部署。</p><a class="action" href="#" id="link1" aria-disabled="true" target="_blank" rel="noopener">先設定網站網址</a></article><article class="card"><span class="badge">VERSION 02</span><h2>版本2</h2><p>加入外部圖片與聲音，讓遊戲預告有了聲音。</p><a class="action" href="#" id="link2" aria-disabled="true" target="_blank" rel="noopener">先設定網站網址</a></article><article class="card"><span class="badge">VERSION 03</span><h2>版本3</h2><p>下一段旅程，準備開始。</p><a class="action" href="coming-soon.html"  >Coming Soon</a></article></div><p id="message" role="status"></p><details id="config"><summary>首次設定：填入版本一、版本二的網址</summary><p>這兩個版本是不同 repo 的網站。設定後會下載新的首頁檔案；請用它取代原本的 index.html，再上傳。設定不是只存在這台電腦裡。</p><form id="settings"><label for="url1">版本一的網站網址</label><input id="url1" type="url" placeholder="https://你的帳號.github.io/typing-v1/" required><label for="url2">版本二的網站網址</label><input id="url2" type="url" placeholder="https://你的帳號.github.io/typing-v2/" required><button type="submit">套用網址並下載 index.html</button></form></details></main><script>
-const $=id=>document.getElementById(id);
-function validWebsite(value){let url;try{url=new URL(value.trim());}catch{throw new Error('請貼完整的 https:// 網站網址。');}if(url.protocol!=='https:'||!url.hostname.endsWith('.github.io')||url.username||url.password)throw new Error('請貼 GitHub Pages 網站網址（https://帳號.github.io/專案/），不要貼 github.com 的 repo 網址。');return url.href;}
-for(const id of ['link1','link2'])$(id).addEventListener('click',e=>{if($(id).getAttribute('aria-disabled')==='true'){e.preventDefault();$('config').open=true;$('message').textContent='請先在下方填入自己的版本一與版本二網站網址。';}});
-$('settings').addEventListener('submit',e=>{e.preventDefault();try{
- const urls=[validWebsite($('url1').value),validWebsite($('url2').value)];if(urls[0]===urls[1])throw new Error('兩個版本應填不同的網站網址。');
- urls.forEach((url,i)=>{const link=$('link'+(i+1));link.setAttribute('href',url);link.removeAttribute('aria-disabled');link.textContent='開啟版本'+(i+1);$('url'+(i+1)).setAttribute('value',url);});
- $('message').textContent='已套用。請把下載的 index.html 放回這個入口網站資料夾並取代原檔，再上傳 GitHub。';$('config').open=false;
- const blob=new Blob(['<!doctype html>\n'+document.documentElement.outerHTML],{type:'text/html;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='index.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
- }catch(e){$('message').textContent=e.message;}});
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>英打遊戲開發歷程</title>
+<style>
+:root{--ink:#5a3a46;--cream:#fff7f9;--pink:#ff9eb5;--rose:#e8789b;font-family:system-ui,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;color:var(--ink);line-height:1.7;box-sizing:border-box}
+*{box-sizing:border-box}
+body{margin:0;background:#ffe3ee}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:-1;image-rendering:pixelated;object-fit:cover;object-position:center bottom}
+main{max-width:1040px;margin:auto;padding:36px 24px 110px}
+.spr{image-rendering:pixelated;display:block}
+.head{display:flex;align-items:flex-end;gap:18px;flex-wrap:wrap}
+.hop{animation:hop 1s steps(2) infinite}
+.eyebrow{margin:0;font-size:13px;letter-spacing:.16em;font-weight:700;color:#a14a6b}
+h1{margin:6px 0 0;font-size:clamp(28px,5vw,48px);line-height:1.25;font-weight:900;color:#fff;-webkit-text-stroke:8px var(--ink);paint-order:stroke fill;text-shadow:0 5px 0 var(--rose),0 8px 0 var(--ink)}
+.lead{display:inline-block;margin:22px 0 28px;padding:6px 18px;background:var(--cream);border:3px solid var(--ink);box-shadow:0 4px 0 var(--rose)}
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.card{position:relative;min-height:290px;perspective:900px;background:#6e4a43;border:4px solid var(--ink);border-radius:6px;box-shadow:0 8px 0 #0003}
+.inner{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;padding:20px;border-radius:2px;
+ background:radial-gradient(#ffd3e1 1.5px,transparent 2px) 0 0/14px 14px,#fff4f7;visibility:hidden;transition:visibility 0s .6s}
+.open .inner{visibility:visible;transition-delay:0s}
+.badge{font-size:12px;letter-spacing:.1em;font-weight:700;color:#a14a6b}
+h2{margin:2px 0 6px;font-size:24px}
+.inner p{margin:6px 0;flex:1;max-width:70%}
+.pet{position:absolute;right:16px;top:16px}
+.row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.action{display:inline-block;padding:9px 18px;background:var(--pink);color:var(--ink);font-weight:800;text-decoration:none;border:3px solid var(--ink);border-radius:4px;box-shadow:0 4px 0 #c9577a}
+.action:hover{background:#ffb6c8}
+.action:active{transform:translateY(3px);box-shadow:0 1px 0 #c9577a}
+.back{font:inherit;font-size:13px;padding:4px 10px;background:#fff;color:var(--ink);border:2px solid var(--ink);border-radius:4px;cursor:pointer}
+.bark{position:absolute;z-index:2;top:0;bottom:0;width:52%;backface-visibility:hidden;transition:transform .7s steps(7),opacity .15s .55s;
+ background:radial-gradient(ellipse at 30% 62%,#8d6252 0 6px,transparent 7px),repeating-linear-gradient(90deg,transparent 0 9px,rgba(90,58,70,.2) 9px 12px,transparent 12px 23px),repeating-linear-gradient(90deg,transparent 0 17px,rgba(255,255,255,.2) 17px 19px,transparent 19px 31px),#d6a18f}
+.bark.l{left:0;transform-origin:left center;clip-path:polygon(0 0,100% 0,92% 12%,100% 26%,90% 40%,100% 55%,91% 70%,100% 84%,94% 100%,0 100%)}
+.bark.r{left:48%;transform-origin:right center;background-position:60% 30%,0 0,0 0,0 0;clip-path:polygon(0 0,100% 0,100% 100%,6% 100%,0 84%,9% 70%,0 55%,10% 40%,0 26%,8% 12%)}
+.open .bark.l{transform:rotateY(-82deg);opacity:0}
+.open .bark.r{transform:rotateY(82deg);opacity:0}
+.chip{position:absolute;z-index:3;left:50%;top:50%;width:10px;height:10px;background:#c99a86;border:2px solid var(--ink);opacity:0;pointer-events:none}
+.open .chip{animation:chip .7s steps(7) forwards}
+.sign{position:absolute;z-index:4;left:50%;top:50%;width:80%;transform:translate(-50%,-50%);padding:14px 8px;font:inherit;color:var(--ink);text-align:center;cursor:pointer;
+ background:#fff1f5;border:3px solid var(--ink);box-shadow:0 5px 0 #0003;transition:opacity .2s,visibility 0s .2s}
+.sign:hover{transform:translate(-50%,-53%)}
+.sign b{display:block;font-size:30px;line-height:1.3}
+.sign small{display:block;font-size:13px;color:#a14a6b}
+.open .sign{opacity:0;visibility:hidden;pointer-events:none}
+:focus-visible{outline:3px solid #c9577a;outline-offset:3px}
+.deco{display:flex;gap:22px;justify-content:center;align-items:flex-end;margin-top:44px}
+@keyframes hop{50%{transform:translateY(-10px)}}
+@keyframes chip{0%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--r))}}
+@media(max-width:700px){main{padding:22px 14px 100px}.cards{grid-template-columns:1fr}.card{min-height:250px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<canvas id="bg" width="192" height="108" aria-hidden="true"></canvas>
+<main>
+  <div class="head">
+    <canvas class="spr hop" data-s="bunny" data-z="3" aria-hidden="true"></canvas>
+    <div><p class="eyebrow">MY TYPING JOURNEY</p><h1>英打遊戲開發歷程</h1></div>
+  </div>
+  <p class="lead">從第一個頁面開始，記錄每一次完成的小進步。</p>
 
-</script></body></html>
+  <section class="cards" aria-label="版本列表">
+    <article class="card">
+      <div class="inner">
+        <canvas class="spr pet" data-s="bunny" data-z="2" aria-hidden="true"></canvas>
+        <span class="badge">VERSION 01</span><h2>版本1</h2>
+        <p>一個標題、一個按鈕。我的第一次網站部署。</p>
+        <div class="row"><a class="action" href="https://ya00000000.github.io/typing-v1/" target="_blank" rel="noopener">開啟版本1</a><button class="back" type="button">↩ 蓋回去</button></div>
+      </div>
+      <div class="bark l"></div><div class="bark r"></div>
+      <button class="sign" type="button" aria-expanded="false"><span class="badge">VERSION 01</span><b>版本1</b><small>點一下，掀開樹皮 ▼</small></button>
+    </article>
+
+    <article class="card">
+      <div class="inner">
+        <canvas class="spr pet" data-s="carrot" data-z="3" aria-hidden="true"></canvas>
+        <span class="badge">VERSION 02</span><h2>版本2</h2>
+        <p>加入外部圖片與聲音，讓遊戲預告有了聲音。</p>
+        <div class="row"><a class="action" href="https://ya00000000.github.io/typing-v2/" target="_blank" rel="noopener">開啟版本2</a><button class="back" type="button">↩ 蓋回去</button></div>
+      </div>
+      <div class="bark l"></div><div class="bark r"></div>
+      <button class="sign" type="button" aria-expanded="false"><span class="badge">VERSION 02</span><b>版本2</b><small>點一下，掀開樹皮 ▼</small></button>
+    </article>
+
+    <article class="card">
+      <div class="inner">
+        <canvas class="spr pet" data-s="apple" data-z="4" aria-hidden="true"></canvas>
+        <span class="badge">VERSION 03</span><h2>版本3</h2>
+        <p>下一段旅程，準備開始。</p>
+        <div class="row"><a class="action" href="v3/index.html">開啟版本3</a><button class="back" type="button">↩ 蓋回去</button></div>
+      </div>
+      <div class="bark l"></div><div class="bark r"></div>
+      <button class="sign" type="button" aria-expanded="false"><span class="badge">VERSION 03</span><b>版本3</b><small>點一下，掀開樹皮 ▼</small></button>
+    </article>
+  </section>
+
+  <div class="deco" aria-hidden="true">
+    <canvas class="spr" data-s="carrot" data-z="3"></canvas><canvas class="spr" data-s="flower" data-z="4"></canvas>
+    <canvas class="spr" data-s="apple" data-z="3"></canvas><canvas class="spr" data-s="flower" data-z="4"></canvas><canvas class="spr" data-s="carrot" data-z="3"></canvas>
+  </div>
+</main>
+
+<script>
+const INK = '#5a3a46';
+const mk = (w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return [c, c.getContext('2d')]; };
+const R = (g, col, ...a) => { g.fillStyle = col; a.forEach(([x, y, w, h]) => g.fillRect(x, y, w, h)); };
+const disc = (g, col, cx, cy, r) => { g.fillStyle = col; for (let y = -r; y <= r; y++) for (let x = -r; x <= r; x++) if (x * x + y * y <= r * r + r * .6) g.fillRect(cx + x, cy + y, 1, 1); };
+
+/* 原創小兔兔 */
+function bunny() {
+  const [c, g] = mk(28, 33), B = [[5,9,18,14],[3,11,22,10],[6,0,5,12],[17,1,5,11],[7,22,14,6],[6,23,16,4],[6,27,6,3],[16,27,6,3],[3,23,4,4],[21,23,4,4]], LF = [[11,7,3,2],[14,5,3,2],[13,8,1,2]];
+  const f = (col, x, y, w, h) => { g.fillStyle = col; g.fillRect(x + 1, y + 1, w, h); };
+  g.fillStyle = INK; B.concat(LF).forEach(([x, y, w, h]) => g.fillRect(x, y, w + 2, h + 2));
+  B.forEach(r => f('#fffaf0', ...r)); LF.forEach(r => f('#6bcb77', ...r));
+  f('#f3e2d2',10,25,8,2); f('#ffadc6',7,2,3,8); f('#ffadc6',18,3,3,7); f('#ffadc6',6,18,3,2); f('#ffadc6',19,18,3,2);
+  f('#ffadc6',13,17,2,1); f('#d9546a',13,18,2,2); f('#ff7aa2',6,21,16,3); f('#e8456b',18,23,3,4);
+  f('#2b2233',9,15,2,3); f('#2b2233',17,15,2,3); f('#fff',9,15,1,1); f('#fff',17,15,1,1);
+  return c;
+}
+function tree() {
+  const [c, g] = mk(36, 40);
+  R(g, INK, [15,23,7,16]); R(g, '#c99a86', [16,23,5,15]); R(g, '#a97a68', [19,23,2,15]);
+  disc(g, INK, 18, 15, 12); disc(g, '#7cc794', 18, 15, 11); disc(g, '#9fdcae', 17, 13, 9); R(g, '#c8f2d0', [11,6,4,2],[10,8,2,2]);
+  [[9,11],[22,8],[16,18],[25,16],[12,19],[20,12]].forEach(([x, y]) => { R(g, '#e8456b', [x,y,3,3]); R(g, '#fff', [x,y,1,1]); });
+  return c;
+}
+function carrot() {
+  const [c, g] = mk(14, 24);
+  R(g, '#6bcb77', [5,0,2,6],[7,1,2,5],[3,2,2,4],[9,2,2,4]);
+  for (let i = 0; i < 16; i++) { const w = Math.max(2, 10 - Math.floor(i * .55)), x = 7 - (w >> 1); R(g, INK, [x - 1, 6 + i, w + 2, 1]); R(g, '#ff9a4d', [x, 6 + i, w, 1]); }
+  R(g, INK, [6,22,2,1]); R(g, '#ff7a2a', [4,10,3,1],[7,14,3,1],[5,17,2,1]);
+  return c;
+}
+function apple() {
+  const [c, g] = mk(15, 16);
+  disc(g, INK, 7, 9, 6); disc(g, '#e8456b', 7, 9, 5); R(g, '#fff', [4,6,2,2]); R(g, '#7a4a2a', [7,1,1,3]); R(g, '#6bcb77', [8,1,3,2]);
+  return c;
+}
+function flower() {
+  const [c, g] = mk(9, 9);
+  R(g, '#ffb3cc', [3,0,3,3],[0,3,3,3],[6,3,3,3],[3,6,3,3]); R(g, '#ffe066', [3,3,3,3]);
+  return c;
+}
+const S = { bunny: bunny(), carrot: carrot(), apple: apple(), flower: flower() }, TREE = tree();
+
+document.querySelectorAll('canvas[data-s]').forEach(c => {
+  const s = S[c.dataset.s], z = +c.dataset.z || 2;
+  c.width = s.width; c.height = s.height; c.getContext('2d').drawImage(s, 0, 0);
+  c.style.width = s.width * z + 'px'; c.style.height = s.height * z + 'px';
+});
+
+/* 背景：粉嫩森林 */
+(function () {
+  const g = document.getElementById('bg').getContext('2d'), GY = 92;
+  ['#ffe9f0', '#ffdfea', '#ffd3e1', '#ffc8d9'].forEach((c, i) => R(g, c, [0, i * 24, 192, 24]));
+  disc(g, '#fff3b8', 152, 22, 9);
+  [[18,20],[70,34],[118,14],[168,46]].forEach(([x, y]) => R(g, '#fff', [x, y, 24, 5], [x + 5, y - 4, 13, 4]));
+  for (let x = 0; x < 192; x++) { const h = 24 + 8 * Math.sin(x / 26) + 3 * Math.sin(x / 8); R(g, '#d9f1df', [x, GY - h, 1, h]); }
+  [6, 34, 58, 104, 132, 172].forEach(x => { for (let j = 0; j < 3; j++) { const w = 6 + j * 5; R(g, '#a5dbb4', [x - (w >> 1), GY - 32 + j * 7, w, 8]); } R(g, '#c99a86', [x - 1, GY - 12, 3, 12]); });
+  for (let x = 0; x < 192; x++) { const h = 10 + 6 * Math.sin(x / 17 + 2); R(g, '#bfe6c8', [x, GY - h, 1, h]); }
+  R(g, '#9bd8a8', [0, GY, 192, 16]); R(g, '#bff0c8', [0, GY, 192, 3]);
+  g.drawImage(TREE, 10, GY - 35); g.drawImage(TREE, 148, GY - 36);
+  [[48,6],[82,9],[112,5],[134,10],[70,11],[180,8],[26,10]].forEach(([x, y]) => g.drawImage(S.flower, x, GY + y));
+  [[58,7],[96,8],[122,7],[166,9]].forEach(([x, y]) => { R(g, '#6bcb77', [x, GY + y - 4, 2, 3], [x + 2, GY + y - 5, 2, 4], [x + 4, GY + y - 4, 2, 3]); R(g, '#ff9a4d', [x + 2, GY + y - 1, 2, 1]); });
+})();
+
+/* 小卡：樹皮掀開 */
+const CH = [[-60,-50,40],[60,-45,-50],[-85,10,70],[80,25,-30],[-35,60,-60],[40,65,45],[0,-70,20]];
+document.querySelectorAll('.card').forEach(card => {
+  const sign = card.querySelector('.sign'), back = card.querySelector('.back');
+  CH.forEach(([dx, dy, r]) => { const s = document.createElement('span'); s.className = 'chip'; s.style.cssText = `--dx:${dx}px;--dy:${dy}px;--r:${r}deg`; card.appendChild(s); });
+  const set = open => {
+    card.classList.toggle('open', open);
+    sign.setAttribute('aria-expanded', open);
+    (open ? card.querySelector('.action') : sign).focus({ preventScroll: true });
+  };
+  sign.addEventListener('click', () => set(true));
+  back.addEventListener('click', () => set(false));
+});
+</script>
+</body>
+</html>
