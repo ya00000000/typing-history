@@ -3,112 +3,95 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>英打遊戲開發歷程</title>
+<title>版本3｜鍵盤練習</title>
 <style>
-:root{--ink:#5a3a46;--cream:#fff7f9;--pink:#ff9eb5;--rose:#e8789b;font-family:system-ui,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;color:var(--ink);line-height:1.7;box-sizing:border-box}
+:root{--ink:#5a3a46;--cream:#fff7f9;--rose:#e8789b;font-family:system-ui,"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif;color:var(--ink);line-height:1.7;box-sizing:border-box}
 *{box-sizing:border-box}
 body{margin:0;background:#ffe3ee}
 #bg{position:fixed;inset:0;width:100%;height:100%;z-index:-1;image-rendering:pixelated;object-fit:cover;object-position:center bottom}
-main{max-width:1040px;margin:auto;padding:36px 24px 110px}
+main{max-width:960px;margin:auto;padding:24px 20px 100px}
+a.home{display:inline-block;padding:6px 16px;background:var(--cream);color:var(--ink);font-weight:800;text-decoration:none;border:3px solid var(--ink);box-shadow:0 4px 0 var(--rose)}
+a.home:hover{background:#fff}
+.head{display:flex;align-items:flex-end;gap:16px;margin:22px 0 6px}
 .spr{image-rendering:pixelated;display:block}
-.head{display:flex;align-items:flex-end;gap:18px;flex-wrap:wrap}
-.hop{animation:hop 1s steps(2) infinite}
 .eyebrow{margin:0;font-size:13px;letter-spacing:.16em;font-weight:700;color:#a14a6b}
-h1{margin:6px 0 0;font-size:clamp(28px,5vw,48px);line-height:1.25;font-weight:900;color:#fff;-webkit-text-stroke:8px var(--ink);paint-order:stroke fill;text-shadow:0 5px 0 var(--rose),0 8px 0 var(--ink)}
-.lead{display:inline-block;margin:22px 0 28px;padding:6px 18px;background:var(--cream);border:3px solid var(--ink);box-shadow:0 4px 0 var(--rose)}
-.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
-.card{position:relative;min-height:290px;perspective:900px;background:#6e4a43;border:4px solid var(--ink);border-radius:6px;box-shadow:0 8px 0 #0003}
-.inner{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;padding:20px;border-radius:2px;
- background:radial-gradient(#ffd3e1 1.5px,transparent 2px) 0 0/14px 14px,#fff4f7;visibility:hidden;transition:visibility 0s .6s}
-.open .inner{visibility:visible;transition-delay:0s}
-.badge{font-size:12px;letter-spacing:.1em;font-weight:700;color:#a14a6b}
-h2{margin:2px 0 6px;font-size:24px}
-.inner p{margin:6px 0;flex:1;max-width:70%}
-.pet{position:absolute;right:16px;top:16px}
-.row{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap}
-.action{display:inline-block;padding:9px 18px;background:var(--pink);color:var(--ink);font-weight:800;text-decoration:none;border:3px solid var(--ink);border-radius:4px;box-shadow:0 4px 0 #c9577a}
-.action:hover{background:#ffb6c8}
-.action:active{transform:translateY(3px);box-shadow:0 1px 0 #c9577a}
-.back{font:inherit;font-size:13px;padding:4px 10px;background:#fff;color:var(--ink);border:2px solid var(--ink);border-radius:4px;cursor:pointer}
-.bark{position:absolute;z-index:2;top:0;bottom:0;width:52%;backface-visibility:hidden;transition:transform .7s steps(7),opacity .15s .55s;
- background:radial-gradient(ellipse at 30% 62%,#8d6252 0 6px,transparent 7px),repeating-linear-gradient(90deg,transparent 0 9px,rgba(90,58,70,.2) 9px 12px,transparent 12px 23px),repeating-linear-gradient(90deg,transparent 0 17px,rgba(255,255,255,.2) 17px 19px,transparent 19px 31px),#d6a18f}
-.bark.l{left:0;transform-origin:left center;clip-path:polygon(0 0,100% 0,92% 12%,100% 26%,90% 40%,100% 55%,91% 70%,100% 84%,94% 100%,0 100%)}
-.bark.r{left:48%;transform-origin:right center;background-position:60% 30%,0 0,0 0,0 0;clip-path:polygon(0 0,100% 0,100% 100%,6% 100%,0 84%,9% 70%,0 55%,10% 40%,0 26%,8% 12%)}
-.open .bark.l{transform:rotateY(-82deg);opacity:0}
-.open .bark.r{transform:rotateY(82deg);opacity:0}
-.chip{position:absolute;z-index:3;left:50%;top:50%;width:10px;height:10px;background:#c99a86;border:2px solid var(--ink);opacity:0;pointer-events:none}
-.open .chip{animation:chip .7s steps(7) forwards}
-.sign{position:absolute;z-index:4;left:50%;top:50%;width:80%;transform:translate(-50%,-50%);padding:14px 8px;font:inherit;color:var(--ink);text-align:center;cursor:pointer;
- background:#fff1f5;border:3px solid var(--ink);box-shadow:0 5px 0 #0003;transition:opacity .2s,visibility 0s .2s}
-.sign:hover{transform:translate(-50%,-53%)}
-.sign b{display:block;font-size:30px;line-height:1.3}
-.sign small{display:block;font-size:13px;color:#a14a6b}
-.open .sign{opacity:0;visibility:hidden;pointer-events:none}
+h1{margin:4px 0 0;font-size:clamp(28px,5vw,46px);line-height:1.25;font-weight:900;color:#fff;-webkit-text-stroke:8px var(--ink);paint-order:stroke fill;text-shadow:0 5px 0 var(--rose),0 8px 0 var(--ink)}
+.lead{display:inline-block;margin:18px 0 22px;padding:6px 18px;background:var(--cream);border:3px solid var(--ink);box-shadow:0 4px 0 var(--rose)}
+#game{background:var(--cream);border:4px solid var(--ink);border-radius:6px;box-shadow:0 8px 0 #0003;padding:22px;outline:none}
+.hud{display:flex;gap:22px;align-items:center;justify-content:center;flex-wrap:wrap}
+.score{min-width:150px;text-align:center;padding:10px 18px;background:#ffeef3;border:3px solid var(--ink);font-weight:800}
+.score b{display:block;font-size:44px;line-height:1.2}
+.score.miss{background:#fff0e6}
+.tgt{text-align:center;font-weight:800}
+#target{width:clamp(100px,16vw,140px);aspect-ratio:1;display:grid;place-items:center;margin-top:4px;font-size:clamp(56px,9vw,84px);font-weight:900;color:var(--ink);
+ background:#ffcc4d;border:5px solid var(--ink);box-shadow:0 8px 0 #8a4b14,inset 0 -8px 0 #e8a33a,inset 0 8px 0 #ffe58f}
+#target.idle{background:#eadde1;box-shadow:0 8px 0 #b7a5ab,inset 0 -8px 0 #d6c6cb;color:#9a8790}
+#target.pop{animation:pop .3s steps(3)}
+#game.shake{animation:shake .3s steps(4)}
+#msg{min-height:3.4em;margin:16px auto 6px;text-align:center;font-size:17px}
+.ctl{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:22px}
+button{font:inherit;font-size:18px;font-weight:800;padding:10px 24px;cursor:pointer;color:var(--ink);background:#ff9eb5;border:3px solid var(--ink);border-radius:4px;box-shadow:0 5px 0 #c9577a}
+button.sec{background:#fff;box-shadow:0 5px 0 #b7a5ab}
+button:hover:not(:disabled){filter:brightness(1.05)}
+button:active:not(:disabled){transform:translateY(3px);box-shadow:0 2px 0 #c9577a}
+button:disabled{opacity:.45;cursor:not-allowed}
 :focus-visible{outline:3px solid #c9577a;outline-offset:3px}
-.deco{display:flex;gap:22px;justify-content:center;align-items:flex-end;margin-top:44px}
-@keyframes hop{50%{transform:translateY(-10px)}}
-@keyframes chip{0%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) rotate(var(--r))}}
-@media(max-width:700px){main{padding:22px 14px 100px}.cards{grid-template-columns:1fr}.card{min-height:250px}}
+.kbs{overflow-x:auto;padding-bottom:6px}
+.kbw{container-type:inline-size;width:100%;min-width:560px;max-width:880px;margin:auto}
+.kb{width:95.1cqw;margin:0 auto;padding:2.4cqw 0 2.3cqw;background:#c3cdc7;border:.35cqw solid #7f978c;border-radius:2.6cqw}
+.r{display:flex;gap:.83cqw;margin-bottom:1.5cqw}
+.r:nth-child(1){margin-left:3.1cqw}.r:nth-child(2){margin-left:4.9cqw}.r:nth-child(3){margin-left:6.5cqw}.r:nth-child(4){margin-left:8.1cqw}
+.r:nth-child(5){margin:2.1cqw 0 0 25.7cqw}
+.k{position:relative;display:grid;place-items:center;width:6.1cqw;height:5.4cqw;font-size:2.4cqw;font-weight:600;color:#2a3d38;background:#faf9f3;border:.12cqw solid #8b9d93;border-radius:.9cqw;box-shadow:0 .35cqw 0 #9fb0a5;transition:transform .05s}
+.k.p{background:#e4b7a3}
+.k.sp{width:43.75cqw;height:3.5cqw;font-size:1.7cqw;color:#4d625a}
+.k.lit{background:#c9302c;color:#fff;border-color:#7a1f1d;box-shadow:0 0 0 .5cqw #f6d7b8,0 .35cqw 0 #7a1f1d;transform:translateY(-.3cqw);animation:glow .8s steps(2) infinite}
+.k.lit::after{content:"";position:absolute;bottom:.6cqw;width:.8cqw;height:.8cqw;background:#fff}
+.k.down{transform:translateY(.35cqw);box-shadow:none}
+.k.bad{background:#ffb3b3}
+.hop{animation:hop .3s steps(3)}
+@keyframes pop{50%{transform:scale(1.12)}}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+@keyframes glow{50%{box-shadow:0 0 0 .8cqw #f6d7b8,0 .35cqw 0 #7a1f1d}}
+@keyframes hop{50%{transform:translateY(-12px)}}
+@media(max-width:700px){main{padding:16px 12px 90px}#game{padding:14px}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <canvas id="bg" width="192" height="108" aria-hidden="true"></canvas>
 <main>
+  <a class="home" href="../index.html">← 回到開發歷程</a>
+
   <div class="head">
-    <canvas class="spr hop" data-s="bunny" data-z="3" aria-hidden="true"></canvas>
-    <div><p class="eyebrow">MY TYPING JOURNEY</p><h1>英打遊戲開發歷程</h1></div>
+    <canvas id="bun" class="spr" aria-hidden="true"></canvas>
+    <div><p class="eyebrow">VERSION 03</p><h1>鍵盤練習</h1></div>
   </div>
-  <p class="lead">從第一個頁面開始，記錄每一次完成的小進步。</p>
+  <p class="lead">看提示，按下鍵盤上同一個字母。先從 A、S、D、F 開始！</p>
 
-  <section class="cards" aria-label="版本列表">
-    <article class="card">
-      <div class="inner">
-        <canvas class="spr pet" data-s="bunny" data-z="2" aria-hidden="true"></canvas>
-        <span class="badge">VERSION 01</span><h2>版本1</h2>
-        <p>一個標題、一個按鈕。我的第一次網站部署。</p>
-        <div class="row"><a class="action" href="https://ya00000000.github.io/typing-v1/" target="_blank" rel="noopener">開啟版本1</a><button class="back" type="button">↩ 蓋回去</button></div>
-      </div>
-      <div class="bark l"></div><div class="bark r"></div>
-      <button class="sign" type="button" aria-expanded="false"><span class="badge">VERSION 01</span><b>版本1</b><small>點一下，掀開樹皮 ▼</small></button>
-    </article>
-
-    <article class="card">
-      <div class="inner">
-        <canvas class="spr pet" data-s="carrot" data-z="3" aria-hidden="true"></canvas>
-        <span class="badge">VERSION 02</span><h2>版本2</h2>
-        <p>加入外部圖片與聲音，讓遊戲預告有了聲音。</p>
-        <div class="row"><a class="action" href="https://ya00000000.github.io/typing-v2/" target="_blank" rel="noopener">開啟版本2</a><button class="back" type="button">↩ 蓋回去</button></div>
-      </div>
-      <div class="bark l"></div><div class="bark r"></div>
-      <button class="sign" type="button" aria-expanded="false"><span class="badge">VERSION 02</span><b>版本2</b><small>點一下，掀開樹皮 ▼</small></button>
-    </article>
-
-    <article class="card">
-      <div class="inner">
-        <canvas class="spr pet" data-s="apple" data-z="4" aria-hidden="true"></canvas>
-        <span class="badge">VERSION 03</span><h2>版本3</h2>
-        <p>下一段旅程，準備開始。</p>
-        <div class="row"><a class="action" href="v3/index.html">開啟版本3</a><button class="back" type="button">↩ 蓋回去</button></div>
-      </div>
-      <div class="bark l"></div><div class="bark r"></div>
-      <button class="sign" type="button" aria-expanded="false"><span class="badge">VERSION 03</span><b>版本3</b><small>點一下，掀開樹皮 ▼</small></button>
-    </article>
+  <section id="game" tabindex="-1" aria-label="練習區">
+    <div class="hud">
+      <div class="score">分數<b id="score">0</b></div>
+      <div class="score miss">錯題數<b id="wrong">0</b></div>
+      <div class="tgt">現在請按<div id="target" class="idle">?</div></div>
+    </div>
+    <p id="msg" role="status">按「開始」，開始練習。</p>
+    <div class="ctl">
+      <button id="start" type="button">▶ 開始</button>
+      <button id="stop" class="sec" type="button" disabled>■ 停止練習</button>
+    </div>
+    <div class="kbs" aria-hidden="true"><div class="kbw"><div class="kb" id="kb"></div></div></div>
   </section>
-
-  <div class="deco" aria-hidden="true">
-    <canvas class="spr" data-s="carrot" data-z="3"></canvas><canvas class="spr" data-s="flower" data-z="4"></canvas>
-    <canvas class="spr" data-s="apple" data-z="3"></canvas><canvas class="spr" data-s="flower" data-z="4"></canvas><canvas class="spr" data-s="carrot" data-z="3"></canvas>
-  </div>
 </main>
 
 <script>
+const $ = id => document.getElementById(id);
 const INK = '#5a3a46';
 const mk = (w, h) => { const c = document.createElement('canvas'); c.width = w; c.height = h; return [c, c.getContext('2d')]; };
 const R = (g, col, ...a) => { g.fillStyle = col; a.forEach(([x, y, w, h]) => g.fillRect(x, y, w, h)); };
 const disc = (g, col, cx, cy, r) => { g.fillStyle = col; for (let y = -r; y <= r; y++) for (let x = -r; x <= r; x++) if (x * x + y * y <= r * r + r * .6) g.fillRect(cx + x, cy + y, 1, 1); };
 
-/* 原創小兔兔 */
+/* ---------- 像素小圖 ---------- */
 function bunny() {
   const [c, g] = mk(28, 33), B = [[5,9,18,14],[3,11,22,10],[6,0,5,12],[17,1,5,11],[7,22,14,6],[6,23,16,4],[6,27,6,3],[16,27,6,3],[3,23,4,4],[21,23,4,4]], LF = [[11,7,3,2],[14,5,3,2],[13,8,1,2]];
   const f = (col, x, y, w, h) => { g.fillStyle = col; g.fillRect(x + 1, y + 1, w, h); };
@@ -126,34 +109,11 @@ function tree() {
   [[9,11],[22,8],[16,18],[25,16],[12,19],[20,12]].forEach(([x, y]) => { R(g, '#e8456b', [x,y,3,3]); R(g, '#fff', [x,y,1,1]); });
   return c;
 }
-function carrot() {
-  const [c, g] = mk(14, 24);
-  R(g, '#6bcb77', [5,0,2,6],[7,1,2,5],[3,2,2,4],[9,2,2,4]);
-  for (let i = 0; i < 16; i++) { const w = Math.max(2, 10 - Math.floor(i * .55)), x = 7 - (w >> 1); R(g, INK, [x - 1, 6 + i, w + 2, 1]); R(g, '#ff9a4d', [x, 6 + i, w, 1]); }
-  R(g, INK, [6,22,2,1]); R(g, '#ff7a2a', [4,10,3,1],[7,14,3,1],[5,17,2,1]);
-  return c;
-}
-function apple() {
-  const [c, g] = mk(15, 16);
-  disc(g, INK, 7, 9, 6); disc(g, '#e8456b', 7, 9, 5); R(g, '#fff', [4,6,2,2]); R(g, '#7a4a2a', [7,1,1,3]); R(g, '#6bcb77', [8,1,3,2]);
-  return c;
-}
-function flower() {
-  const [c, g] = mk(9, 9);
-  R(g, '#ffb3cc', [3,0,3,3],[0,3,3,3],[6,3,3,3],[3,6,3,3]); R(g, '#ffe066', [3,3,3,3]);
-  return c;
-}
-const S = { bunny: bunny(), carrot: carrot(), apple: apple(), flower: flower() }, TREE = tree();
+const BUN = bunny(), bun = $('bun');
+bun.width = 28; bun.height = 33; bun.getContext('2d').drawImage(BUN, 0, 0); bun.style.width = '84px'; bun.style.height = '99px';
 
-document.querySelectorAll('canvas[data-s]').forEach(c => {
-  const s = S[c.dataset.s], z = +c.dataset.z || 2;
-  c.width = s.width; c.height = s.height; c.getContext('2d').drawImage(s, 0, 0);
-  c.style.width = s.width * z + 'px'; c.style.height = s.height * z + 'px';
-});
-
-/* 背景：粉嫩森林 */
 (function () {
-  const g = document.getElementById('bg').getContext('2d'), GY = 92;
+  const g = $('bg').getContext('2d'), GY = 92, T = tree();
   ['#ffe9f0', '#ffdfea', '#ffd3e1', '#ffc8d9'].forEach((c, i) => R(g, c, [0, i * 24, 192, 24]));
   disc(g, '#fff3b8', 152, 22, 9);
   [[18,20],[70,34],[118,14],[168,46]].forEach(([x, y]) => R(g, '#fff', [x, y, 24, 5], [x + 5, y - 4, 13, 4]));
@@ -161,24 +121,74 @@ document.querySelectorAll('canvas[data-s]').forEach(c => {
   [6, 34, 58, 104, 132, 172].forEach(x => { for (let j = 0; j < 3; j++) { const w = 6 + j * 5; R(g, '#a5dbb4', [x - (w >> 1), GY - 32 + j * 7, w, 8]); } R(g, '#c99a86', [x - 1, GY - 12, 3, 12]); });
   for (let x = 0; x < 192; x++) { const h = 10 + 6 * Math.sin(x / 17 + 2); R(g, '#bfe6c8', [x, GY - h, 1, h]); }
   R(g, '#9bd8a8', [0, GY, 192, 16]); R(g, '#bff0c8', [0, GY, 192, 3]);
-  g.drawImage(TREE, 10, GY - 35); g.drawImage(TREE, 148, GY - 36);
-  [[48,6],[82,9],[112,5],[134,10],[70,11],[180,8],[26,10]].forEach(([x, y]) => g.drawImage(S.flower, x, GY + y));
-  [[58,7],[96,8],[122,7],[166,9]].forEach(([x, y]) => { R(g, '#6bcb77', [x, GY + y - 4, 2, 3], [x + 2, GY + y - 5, 2, 4], [x + 4, GY + y - 4, 2, 3]); R(g, '#ff9a4d', [x + 2, GY + y - 1, 2, 1]); });
+  g.drawImage(T, 10, GY - 35); g.drawImage(T, 148, GY - 36);
+  [[48,6],[82,9],[112,5],[134,10],[70,11],[180,8],[26,10]].forEach(([x, y]) => { R(g, '#ffb3cc', [x+3,GY+y,3,3],[x,GY+y+3,3,3],[x+6,GY+y+3,3,3],[x+3,GY+y+6,3,3]); R(g, '#ffe066', [x+3,GY+y+3,3,3]); });
 })();
 
-/* 小卡：樹皮掀開 */
-const CH = [[-60,-50,40],[60,-45,-50],[-85,10,70],[80,25,-30],[-35,60,-60],[40,65,45],[0,-70,20]];
-document.querySelectorAll('.card').forEach(card => {
-  const sign = card.querySelector('.sign'), back = card.querySelector('.back');
-  CH.forEach(([dx, dy, r]) => { const s = document.createElement('span'); s.className = 'chip'; s.style.cssText = `--dx:${dx}px;--dy:${dy}px;--r:${r}deg`; card.appendChild(s); });
-  const set = open => {
-    card.classList.toggle('open', open);
-    sign.setAttribute('aria-expanded', open);
-    (open ? card.querySelector('.action') : sign).focus({ preventScroll: true });
-  };
-  sign.addEventListener('click', () => set(true));
-  back.addEventListener('click', () => set(false));
+/* ---------- 用 CSS 做的英文鍵盤 ---------- */
+const SYM = { '-':'Minus','=':'Equal','[':'BracketLeft',']':'BracketRight',';':'Semicolon',"'":'Quote',',':'Comma','.':'Period','/':'Slash' };
+const codeOf = ch => /[A-Z]/.test(ch) ? 'Key' + ch : /\d/.test(ch) ? 'Digit' + ch : SYM[ch];
+const keyEls = {};
+['1234567890-=', 'QWERTYUIOP[]', "ASDFGHJKL;'", 'ZXCVBNM,./', null].forEach((row, ri) => {
+  const r = document.createElement('div'); r.className = 'r';
+  (row ? [...row] : ['SPACE']).forEach((ch, i) => {
+    const k = document.createElement('div'); k.className = 'k'; k.textContent = ch;
+    if (!row) { k.classList.add('sp'); keyEls.Space = k; }
+    else { if (ri === 2 && i < 10) k.classList.add('p'); keyEls[codeOf(ch)] = k; }
+    r.appendChild(k);
+  });
+  $('kb').appendChild(r);
 });
+
+/* ---------- 練習 ---------- */
+const LETTERS = ['A', 'S', 'D', 'F'];
+let running = false, score = 0, wrong = 0, target = null;
+const tEl = $('target'), msg = $('msg'), game = $('game');
+
+function setScore() { $('score').textContent = score; $('wrong').textContent = wrong; }
+function clearLit() { Object.values(keyEls).forEach(k => k.classList.remove('lit', 'down', 'bad')); }
+function pop(el, cls) { el.classList.remove(cls); void el.offsetWidth; el.classList.add(cls); }
+function nextQuestion() {
+  let c; do { c = LETTERS[Math.random() * LETTERS.length | 0]; } while (c === target);
+  if (target) keyEls['Key' + target].classList.remove('lit');
+  target = c; tEl.textContent = c; tEl.classList.remove('idle'); keyEls['Key' + c].classList.add('lit');
+  return c;
+}
+function start() {
+  running = true; score = 0; wrong = 0; target = null; setScore(); clearLit();
+  $('start').textContent = '↻ 重新開始'; $('stop').disabled = false;
+  msg.textContent = '開始！請按 ' + nextQuestion();
+  game.focus({ preventScroll: true });
+}
+function stop() {
+  running = false; target = null; clearLit();
+  tEl.textContent = '?'; tEl.classList.add('idle');
+  $('start').textContent = '▶ 開始'; $('stop').disabled = true;
+  msg.textContent = '練習結束，這次得到 ' + score + ' 分，答錯 ' + wrong + ' 題。想再練一次，就按「開始」。';
+  $('start').focus({ preventScroll: true });
+}
+$('start').addEventListener('click', start);
+$('stop').addEventListener('click', stop);
+
+addEventListener('keydown', e => {
+  if (!running || e.ctrlKey || e.metaKey || e.altKey) return;
+  const k = keyEls[e.code];
+  if (!k) return;                      // 只處理畫面上有的鍵（Shift、Tab、方向鍵等不算）
+  e.preventDefault();
+  if (e.repeat) return;                // 長按不連續計分
+  k.classList.add('down');
+  if (e.code === 'Key' + target) {
+    score++; setScore(); pop(tEl, 'pop'); pop(bun, 'hop');
+    msg.textContent = '答對了！+1 分。下一個請按 ' + nextQuestion();
+  } else {
+    wrong++; setScore();
+    const shown = k.textContent === 'SPACE' ? '空白鍵' : k.textContent;
+    msg.textContent = '按到 ' + shown + ' 了，這題要按 ' + target + '，再試一次！';
+    pop(game, 'shake'); k.classList.add('bad'); setTimeout(() => k.classList.remove('bad'), 250);
+  }
+});
+addEventListener('keyup', e => { const k = keyEls[e.code]; if (k) k.classList.remove('down'); });
+addEventListener('blur', () => Object.values(keyEls).forEach(k => k.classList.remove('down')));
 </script>
 </body>
 </html>
